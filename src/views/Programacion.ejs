@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <title>Programacion</title>
+</head>
+<body>
+    <div class="container">
+
+        
+        <div class="text-center"><h1>Programacion</h1></div>
+        <div id="DataSelector">
+            <div class="col-12 text-end">
+                <button class="btn btn-primary" type="submit" id="btn-Modificar">Modificar programación</button>
+            </div>
+
+            <div class="row p-md-5">
+                <h2>Crear programación</h2>
+
+
+                <form class="row g-3 needs-validation" novalidate>
+
+                    <h4>Partido</h4>
+                    <div class="col-md-5">
+                        <label for="Players" class="form-label">Equipo A</label>
+                        <div id="Equipo-A-Select">
+                                    
+                        </div>
+                        <div class="invalid-feedback">
+                            Nombre Invalido
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-center p-4">
+                        <h5>VS</h5>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="Players" class="form-label">Equipo B</label>
+                        <div id="Equipo-B-Select">
+                                    
+                        </div>
+                        <div class="invalid-feedback">
+                            Nombre Invalido
+                        </div>
+                    </div>
+
+                    <h4>Logistica</h4>
+                    <div class="col-md-6">
+                            <label for="TeamName" class="form-label">Estadio</label>
+                            <div id="SelectPT">
+                                    
+                            </div>
+                            <div class="invalid-feedback">
+                                Equipo invalido
+                            </div>
+                    </div>      
+        
+                    <div class="col-md-6" id="ArbitroSelect" style="display: none;">
+                        <label for="Arbitros" class="form-label">Arbitro</label>
+                        <div id="ArbitrosList">
+                                
+                        </div>
+
+                        <div class="invalid-feedback">
+                            Escoja un arbitro
+                        </div>
+                    </div>
+                        <div class="col-md-6">
+                        <label for="DateI" class="form-label">Fecha y hora</label>
+                        <input type="text" id="DateI" class="form-control" /> 
+                            <div class="invalid-feedback">
+                                Escoja un entrenador
+                            </div>
+                        </div>
+                    <div class="col-12">
+                    <button id="SendProgramming" class="btn btn-primary" type="submit">Enviar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+            
+            <div id="Modificar" style="display: none;">
+                <h2>Modificar programacion</h2>    
+                    <div class="Modification">
+                        <div class="row row mt-5">    
+                            <div class="col-md-7">  
+                                <div class="overflow-scroll" style="height: 250px">
+                                    <table class="table table-bordered table-striped mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Equipo A</th>
+                                                <th>Equipo B</th>
+                                                <th>Arbitro</th>
+                                                <th>Fecha</th>
+                                                <th>Estadio</th>
+                                                <th>Accion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="TableResult">
+                                            <tr><td></td><td></td><td><button data-id="1" class='delete btn btn-danger' style="display: none;"></button></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-5">  
+                                <div class="card-body">
+                                    <form action="" method="post" class="needs-validation">
+        
+                                            <div class="form-group">
+                                                <label for="Nombre"> Equipo </label>
+                                                <input type="text" id="NombreBusqueda" name="nombre" placeholder="Nombre" class="form-control">
+                                            </div>       
+                                            <div class="form-group">
+                                                <label for="DateI" class="form-label">Fecha y hora</label>
+                                                <input type="text" id="DateModification" class="form-control" /> 
+            
+                                            </div>         
+                                            
+                                        <button type="button" class="btn btn-danger mt-2" id="BuscarModify"> Buscar</button>       
+                                        <button type="button" class="btn btn-danger mt-2" id="Back">Volver</button> 
+                
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div> 
+        </div>
+        
+    </div>
+    
+    
+    <script src="/socket.io/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="/js/Programacion.js"></script>
+    <script src="/js/DataTimePicker.js"></script>
+</body>
+</html>
