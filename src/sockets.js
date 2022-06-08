@@ -160,6 +160,7 @@ function NuevoEquipo(NewTeam){
 }
 
 function ProcedenceRequest(socket){
+
     Query = "SELECT * FROM futbol.procedencia";
     connection.query(Query, (error,data)=>{
         if(error){
@@ -475,6 +476,7 @@ function SetWin(socket, ID){
             console.log(error);
         }else{
             if(data.length>0){
+                console.log(data.GolesEquipoA>data.GolesEquipoB)
                 if(data.GolesEquipoA>data.GolesEquipoB){
                     Query = "UPDATE `futbol`.`Programacion` SET `Victoria` = 'A' WHERE (`IDProgramacion` = ?);";
                 }else{

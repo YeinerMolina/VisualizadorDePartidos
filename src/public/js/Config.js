@@ -27,7 +27,7 @@ const socket = io();
 var Row = '';
 var btnDelete = 'null';
 
-socket.emit('client:RequireProcedence')
+socket.emit('client: RequireProcedence')
 
 
 socket.on('Server: NewTablesData',(data)=>{
