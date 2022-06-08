@@ -144,7 +144,7 @@ socket.on('Server: ProgramationReply',(data)=>{
                 Accion =    `<a href='/Progreso/`+ data.IDProgramacion +`' class='btn btn-primary'>Estado Online</a>
                             <a href='/Narrar/`+ data.IDProgramacion +`' class='btn btn-primary'>Narrar</a>`
                 Resultado = ``
-            }else if(new Date() > new Date(data.FechaFinal)){
+            }else if(new Date() > new Date(data.FechaFinal) || data.Victoria!=null){
     
                 Estado = 'Finalizado'
                 Accion = `<a href='/Resultado/`+ data.IDProgramacion +`' class='btn btn-primary'>Ver resultado</a>`
