@@ -138,23 +138,20 @@ socket.on('Server: ProgramationReply',(data)=>{
     data.forEach(data => {
         Estado = ''
         Accion = ``
-        if(data.FechaFinal != null){
-            if(new Date(data.Fecha) < new Date() && new Date() < new Date(data.FechaFinal)){
-                Estado = 'En curso'
-                Accion =    `<a href='/Progreso/`+ data.IDProgramacion +`' class='btn btn-primary'>Estado Online</a>
-                            <a href='/Narrar/`+ data.IDProgramacion +`' class='btn btn-primary'>Narrar</a>`
-                Resultado = ``
-            }else if(new Date() > new Date(data.FechaFinal) || data.Victoria!=null){
-    
-                Estado = 'Finalizado'
-                Accion = `<a href='/Resultado/`+ data.IDProgramacion +`' class='btn btn-primary'>Ver resultado</a>`
-            }else{
-                Estado = 'Proximamente'
-                Accion = ``
-                Resultado = ``
-            }
+        console.log(data.FechaFinal == null)
+        if(new Date(data.Fecha) < new Date()){
+            Estado = 'En curso'
+            Accion =    `<a href='/Progreso/`+ data.IDProgramacion +`' class='btn btn-primary'>Estado Online</a>
+                        <a href='/Narrar/`+ data.IDProgramacion +`' class='btn btn-primary'>Narrar</a>`
+            Resultado = ``
+        }else if(data.FechaFinal != null && data.Victoria != null){
+
+            Estado = 'Finalizado'
+            Accion = `<a href='/Resultado/`+ data.IDProgramacion +`' class='btn btn-primary'>Ver resultado</a>`
         }else{
             Estado = 'Proximamente'
+            Accion = ``
+            Resultado = ``
         }
         
 
