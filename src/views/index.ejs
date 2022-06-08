@@ -32,17 +32,29 @@
         <div class="row">
             <div class="row">
                 <h1>Visualizacion</h1>
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
             </div>
         </div>
             <div class="Modification">
+              <h3>Programacion del día</h3>
                 <div class="row row mt-5">    
                     <div class="col-md-12">  
-                        <div class="overflow-scroll" style="height: 500px">
+                        <div class="overflow-scroll" style="height: 300px">
                             <table class="table table table-striped mb-0 ">
                                 <thead>
                                     <tr>
                                         <th>Partidos programados del día</th>
-                                        <th>Hora</th>
+                                        <th>Resultado</th>
+                                        <th>Hora del partido</th>
                                         <th>Estado</th>
                                         <th></th>
                                     </tr>
@@ -55,6 +67,29 @@
                     </div>
                 </div>
                 </div>
+
+              <div class="Modification">
+                <h3>Tabla de clasificacion</h3>
+                  <div class="row row mt-5">    
+                      <div class="col-md-12">  
+                          <div class="overflow-scroll" style="height: 300px">
+                              <table class="table table table-striped mb-0 ">
+                                  <thead>
+                                      <tr>
+                                          <th>Posición</th>
+                                          <th>Equipo</th>
+                                          <th>Victorias</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody id="Posiciones">
+                                      <tr><td></td><td></td><td><button data-id="1" class='delete btn btn-danger' style="display: none;"></button></td></tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                
             </div> 
 
     </div>

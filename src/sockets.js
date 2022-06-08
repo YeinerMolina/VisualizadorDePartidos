@@ -80,6 +80,18 @@ module.exports = io => {
             FinishGame(DatosFinish);
         })
 
+        socket.on('Client: RequesResult',(IDProgram)=>{
+            RequesResult(socket,IDProgram);
+        })
+
+        socket.on('Client: SetWin',(ID)=>{
+            SetWin(socket,ID);
+        })
+
+        socket.on('Client: TablePositionRequest',()=>{
+            TablePosition(socket);
+        })
+
     })
 }
 
@@ -407,6 +419,66 @@ function FinishGame(DatosFinish){
             console.log(error);
         }
     })
+}
+
+function RequesResult(socket,IDProgram){
+    IDProgram.forEach((IDProgram)=>{
+        Query = "SELECT * FROM futbol.OnlineGameEvents WHERE IDGame =?";
+        connection.query(Query,IDProgram, (error,data)=>{
+            if(error){
+                console.log(error);
+            }else{
+                if(data.length>0){
+                    socket.emit('Server: ReplyResult',data)
+                }
+
+            }
+        })
+    })
+
+}
+
+function SetWin(socket, ID){
+    Query = "SELECT * FROM futbol.OnlineGameEvents WHERE IDGame =?";
+    connection.query(Query,ID, (error,data)=>{
+        if(error){
+            console.log(error);
+        }else{
+            if(data.length>0){
+                if(data.GolesEquipoA>data.GolesEquipoB){
+                    Query = "UPDATE `futbol`.`Programacion` SET `Victoria` = 'A' WHERE (`IDProgramacion` = ?);";
+                }else{
+                    Query = "UPDATE `futbol`.`Programacion` SET `Victoria` = 'B' WHERE (`IDProgramacion` = ?);";
+                }
+                connection.query(Query,ID, (error,data)=>{
+                    if(error){
+                        console.log(error);
+                    }
+                })
+
+            }
+        }
+    })
+}
+
+function TablePosition(socket){
+    Query = "SELECT * FROM futbol.Programacion";
+    connection.query(Query, (error,data)=>{
+        if(error){
+            console.log(error);
+        }else{
+            socket.emit('Server: Victorias',data)
+        }
+    })
+    Query = "SELECT * FROM futbol.equipos";
+    connection.query(Query, (error,data)=>{
+        if(error){
+            console.log(error);
+        }else{
+            socket.emit('Server: TablePositionReply',data)
+        }
+    })
+    
 }
 
 const connection = require('../database/db');

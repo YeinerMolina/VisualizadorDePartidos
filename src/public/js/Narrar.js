@@ -147,8 +147,11 @@ ActualizarTeamB.addEventListener('click',(event)=>{
 Finish = document.getElementById('Finish');
 Finish.addEventListener('click',(e)=>{
     e.preventDefault()
-    Fecha = new Date();
-    console.log(Fecha)
+    socket.emit('Client: SetWin',ID)
+    Hora = new Date().toLocaleTimeString('km-KH', {timezone: 'America/Bogota', hour12: false})
+    Dia = new Date().toLocaleDateString('fr-CA', {timezone: 'America/Bogota', hour12: false})
+    Fecha = Dia + " " + Hora
     socket.emit('Client: FinishGame',{Fecha, ID});
 
+    location.href = '/'
 })
