@@ -106,6 +106,22 @@ module.exports = io => {
             DataRequiredMod(Busqueda,socket);
         })
 
+        socket.on('client: UpdateTeam',(TeamUpdate)=>{
+            UpdateTeam(TeamUpdate);
+        })
+
+        socket.on('client: ModifyArbitro', (ArbitroUpdate)=>{
+            ModifyArbitro(ArbitroUpdate);
+        })
+
+        socket.on('client: ModifyStadium', (EstadioUpdate)=>{
+            ModifyStadium(EstadioUpdate)
+        })
+
+        socket.on('Client: ModifyPlayer',(PlayerModify)=>{
+            ModifyPlayer(PlayerModify);
+        })
+
     })
 }
 
@@ -561,16 +577,16 @@ function DataRequiredMod(Busqueda,socket){
             Column = [`idequipo`]
             break;
         case 'Jugador':
-            DB = ['arbitros']
-            Column = `idarbitro`
+            DB = ['jugadores']
+            Column = [`idjugador`]
             break;
         case 'Estadio':
-            DB = ['jugadores']
-            Column = `idjugador`
+            DB = ['estadios']
+            Column = [`idestadio`]
             break;
         case 'Arbitro':
-            DB = ['estadios']
-            Column = `idestadio`
+            DB = ['arbitros']
+            Column = [`idarbitro`]
             break;
     }
 
@@ -580,6 +596,48 @@ function DataRequiredMod(Busqueda,socket){
             console.log(error);
         }else{
             socket.emit('Server: ReplyData',(data))
+        }
+    })
+
+}
+
+function UpdateTeam(TeamUpdate){
+    query = "UPDATE `futbol`.`equipos` SET `nombreequipo` = ?, `dtequipo` = ?, `procedenciaequipo` = ?, `Grupo` = ? WHERE (`idequipo` = ?);"
+    dataArray = [TeamUpdate.Equipo, TeamUpdate.Entrenador, TeamUpdate.Procedencia, TeamUpdate.Grupo, TeamUpdate.ID]
+    connection.query(query, dataArray, (error,data)=>{
+        if(error){
+            console.log(error);
+        }
+    })
+}
+
+function ModifyArbitro(ArbitroUpdate){
+
+    query = "UPDATE `futbol`.`arbitros` SET `nombrearbitro` = ?, `procedenciaarbitro` = ? WHERE (`idarbitro` = ?);"
+    dataArray = [ArbitroUpdate.Arbitro, ArbitroUpdate.Procedencia, ArbitroUpdate.ID]
+    connection.query(query, dataArray, (error,data)=>{
+        if(error){
+            console.log(error);
+        }
+    })
+}
+
+function ModifyStadium(StadiumUpdate){
+    query = "UPDATE `futbol`.`estadios` SET `nombreestadio` = ?, `precedenciaestadio` =  ?, `capacidad` = ? WHERE (`idestadio` = ?);"
+    dataArray = [StadiumUpdate.Estadio, StadiumUpdate.Ubicacion, StadiumUpdate.Capacidad, StadiumUpdate.ID]
+    connection.query(query, dataArray, (error,data)=>{
+        if(error){
+            console.log(error);
+        }
+    })
+}
+
+function ModifyPlayer(PlayerModify){
+    query = "UPDATE `futbol`.`jugadores` SET `nombrejugador` = ?, `numerojugador` = ? WHERE (`idjugador` = ?);"
+    dataArray = [PlayerModify.JugadoresNombre + ' ' + PlayerModify.JugadoresApellido, PlayerModify.JugadoresNumero, PlayerModify.ID]
+    connection.query(query, dataArray, (error,data)=>{
+        if(error){
+            console.log(error);
         }
     })
 

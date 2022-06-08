@@ -109,6 +109,13 @@ PlayerName = document.getElementById('PlayersName');
 PlayerLastName = document.getElementById('PlayersLastName');
 PlayersNumber = document.getElementById('PlayersNumber');
 
+ArbitroName = document.getElementById('ArbName');
+FormArbitro = document.getElementById('FormArbitro')
+
+EstadioForm = document.getElementById('EstadioForm');
+Estadio = document.getElementById('EstName');
+Capacidad = document.getElementById('Capacidad');
+
 BuscarModify = document.getElementById('BuscarModify');
 Back = document.getElementById('Back');
 
@@ -118,15 +125,13 @@ AddPlayer.addEventListener('click',()=>{
     NumeroPlayer = PlayersNumber.value; 
 
     if(NombrePlayer != '' && ApellidoPlayer != '' && NumeroPlayer != ''){
-        JugadoresNombre.push(NombrePlayer);
-        JugadoresApellido.push(ApellidoPlayer);
-        JugadoresNumero.push(NumeroPlayer);
-        Actual = NewPlayer.innerHTML;
-        NewPlayer.innerHTML = Actual + `<li class="list-group-item">` + NombrePlayer + ' ' + ApellidoPlayer + ', ' + NumeroPlayer  + `</li>`
-
-        PlayerName.value = '';
-        PlayerLastName.value = '';
-        PlayersNumber.value = ''; 
+        JugadoresNombre = NombrePlayer
+        JugadoresApellido = ApellidoPlayer
+        JugadoresNumero = NumeroPlayer
+        
+        socket.emit('Client: ModifyPlayer',{JugadoresNombre, JugadoresApellido, JugadoresNumero,ID})
+        alert('Datos enviados correctamente')
+        location.href= '/Configuracion';
     }
 
 })
@@ -139,37 +144,55 @@ socket.on('Server: ReplyData',(data)=>{
     ProcedenciaEst = document.getElementById('Ubicacion');
 
     GrupoTeams = document.getElementById('GrupoTeams');
-
     switch(Type){
         case 'Equipo':
+
             TeamName.value = data[0].nombreequipo;
-            TeamName.disabled = 'true';
             Entrenador.value = data[0].dtequipo;
-            Entrenador.disabled = 'true';
             ProcedenciaTeam.value = data[0].procedenciaequipo;
-            ProcedenciaTeam.disabled = 'true';
-            
+            GrupoTeams.value = data[0].Grupo;
+
+            PlayerName.disabled = true
+            PlayerLastName.disabled = true
+            PlayersNumber.disabled = true
+            AddPlayer.disabled = true
+
+ 
             break;
         case 'Jugador':
 
-            TeamName.value = data[0].nombreequipo;
             TeamName.disabled = 'true';
-            Entrenador.value = data[0].dtequipo;
             Entrenador.disabled = 'true';
-            ProcedenciaTeam.value = data[0].procedenciaequipo;
             ProcedenciaTeam.disabled = 'true';
-            GrupoTeams.value = data[0].Grupo;
             GrupoTeams.disabled = 'true';
- 
+            document.getElementById('TeamButton').disabled = 'true';
+
+            NyA = data[0].nombrejugador.split(' ')
+
+            PlayerName.value = NyA[0]
+            PlayerLastName.value = NyA[1]
+            PlayersNumber.value = data[0].numerojugador
             
-            
+
             break;
         case 'Estadio':
+
+
+            Estadio.value = data[0].nombreestadio;
+            Capacidad.value = data[0].capacidad;
+            document.getElementById('Ubicacion').value = data[0].precedenciaestadio
+
             Equipo.style.display = 'none'
             Arbitros.style.display = 'none'
             Estadios.style.display = ''
             break;
         case 'Arbitro':
+
+
+            ArbitroName.value = data[0].nombrearbitro;
+            document.getElementById('ProcedenciaArb').value = data[0].procedenciaarbitro;
+
+
             Equipo.style.display = 'none'
             Arbitros.style.display = ''
             Estadios.style.display = 'none'
@@ -180,35 +203,32 @@ socket.on('Server: ReplyData',(data)=>{
 FormTeam.addEventListener('submit',(event)=>{
     event.preventDefault();
     
-    var formData = new FormData();
-    var files = $('#Logo')[0].files[0];
-    formData.append('image', files);
-    
-    $.ajax({
-        url: "/upload",
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-    });
-      
-    Procedencia = document.getElementById('ProcedenciaTeam').value;
-    Grupo = document.getElementById('Grupo').value;
-    NombreVal = TeamName.value;
-    LogoVal = Logo.value;
-    EntrenadorVal = Entrenador.value;
-    if(NombreVal != '' && LogoVal != '' && EntrenadorVal != '' && JugadoresNombre.length > 0 && JugadoresApellido.length > 0 && JugadoresNumero.length > 0 && Procedencia != ''){
+    if(Logo.files.length === 0){
+        var formData = new FormData();
+        var files = $('#Logo')[0].files[0];
+        formData.append('image', files);
         
-        socket.emit('client: NewTeam', {Equipo: NombreVal, Logo:files.name, Entrenador: EntrenadorVal, Procedencia, JugadoresName: JugadoresNombre, JugadoresLastName: JugadoresApellido, JugadoresNumber: JugadoresNumero, Grupo})
+        $.ajax({
+            url: "/upload",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+        });   
+        LogoVal = Logo.value;  
+    }
+    
+    Procedencia = document.getElementById('ProcedenciaTeam').value;
+    Grupo = document.getElementById('GrupoTeams').value;
+    NombreVal = TeamName.value;
+    EntrenadorVal = Entrenador.value;
+    if(NombreVal != '' && EntrenadorVal != ''  && Procedencia != ''){
+        
+        socket.emit('client: UpdateTeam', {Equipo: NombreVal, Entrenador: EntrenadorVal, Procedencia, Grupo, ID})
         alert('Datos enviados correctamente')
-
-    }else if(JugadoresNombre.length == 0){
-        alert('El equipo debe tener al menos 1 jugador');
+        location.href = '/Configuracion'
     }
 })
-
-ArbitroName = document.getElementById('ArbName');
-FormArbitro = document.getElementById('FormArbitro')
 
 
 FormArbitro.addEventListener('submit', (event)=>{
@@ -217,15 +237,14 @@ FormArbitro.addEventListener('submit', (event)=>{
     ProcedenciaArb = document.getElementById('ProcedenciaArb').value;
     if(ArbitroNameVal != '' && ProcedenciaArb != ''){
         
-        socket.emit('client: newArbitro', {Arbitro: ArbitroNameVal, Procedencia: ProcedenciaArb})
+        socket.emit('client: ModifyArbitro', {Arbitro: ArbitroNameVal, Procedencia: ProcedenciaArb, ID})
         alert('Datos enviados correctamente')
+        location.href= '/Configuracion';
 
     }
 })
 
-EstadioForm = document.getElementById('EstadioForm');
-Estadio = document.getElementById('EstName');
-Capacidad = document.getElementById('Capacidad');
+
 
 
 EstadioForm.addEventListener('submit', (event)=>{
@@ -235,8 +254,9 @@ EstadioForm.addEventListener('submit', (event)=>{
     UbicacionVal = document.getElementById('Ubicacion').value;
     if(EstadioVal != '' && CapacidadVal != '' && Ubicacion != ''){
         
-        socket.emit('client: newStadium', {Estadio: EstadioVal, Capacidad: CapacidadVal, Ubicacion: UbicacionVal})
+        socket.emit('client: ModifyStadium', {Estadio: EstadioVal, Capacidad: CapacidadVal, Ubicacion: UbicacionVal, ID})
         alert('Datos enviados correctamente')
+        location.href= '/Configuracion';
     }
 })
 
