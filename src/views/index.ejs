@@ -32,23 +32,13 @@
         <div class="row">
             <div class="row">
                 <h1>Visualizacion</h1>
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </div>
             </div>
         </div>
             <div class="Modification">
               <h3>Programacion del día</h3>
                 <div class="row row mt-5">    
                     <div class="col-md-12">  
-                        <div class="overflow-scroll" style="height: 300px">
+                        <div class="overflow-scroll" style="height: 275px">
                             <table class="table table table-striped mb-0 ">
                                 <thead>
                                     <tr>
@@ -71,8 +61,9 @@
               <div class="Modification">
                 <h3>Tabla de clasificacion</h3>
                   <div class="row row mt-5">    
-                      <div class="col-md-12">  
-                          <div class="overflow-scroll" style="height: 300px">
+                      <div class="col-md-6">
+                        <h4>Grupo A</h4>  
+                          <div class="overflow-scroll" style="height: 275px">
                               <table class="table table table-striped mb-0 ">
                                   <thead>
                                       <tr>
@@ -87,6 +78,23 @@
                               </table>
                           </div>
                       </div>
+                      <div class="col-md-6">
+                        <h4>Grupo B</h4>  
+                          <div class="overflow-scroll" style="height: 275px">
+                              <table class="table table table-striped mb-0 ">
+                                  <thead>
+                                      <tr>
+                                          <th>Posición</th>
+                                          <th>Equipo</th>
+                                          <th>Victorias</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody id="PosicionesB">
+                                      <tr><td></td><td></td><td><button data-id="1" class='delete btn btn-danger' style="display: none;"></button></td></tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
                   </div>
                 </div>
                 
@@ -94,11 +102,9 @@
 
     </div>
 
-    <script src="/socket.io/socket.io.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-
+    <script src="/socket.io/socket.io.min.js"></script>
     
     <script src="/js/index.js"></script>
 

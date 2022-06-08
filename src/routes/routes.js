@@ -33,5 +33,10 @@ router.get('/Narrar/:IDGame', (req,res) =>{
     res.render('Narrar');
 })
 
+router.get('/Selected/Programacion/:IDGame', (req,res) =>{
+    res.render('ProgramacionMod');
+})
+
+
 const connection = require('../../database/db.js');
 module.exports = router;

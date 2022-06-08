@@ -2,6 +2,7 @@
 const socket = io()
 IDProgram = [];
 Victorias = [];
+Jugadores = [];
 
 FechaH = new Date().toISOString().split('T')[0];
 socket.emit('Client: RequestProgramation',FechaH)
@@ -18,11 +19,17 @@ socket.on('Server: Victorias',(data)=>{
     })
 })
 
+socket.on('Server: Jugadores',(data)=>{
+    Jugadores = data;
+})
+
 
 socket.on('Server: TablePositionReply',(data)=>{
     TablaRepeticiones = [];
     Positiones = "";
+    Dropdown = [];
     data.forEach(data=>{
+        DropdownHTML = '';
         Repeticiones = 0;
         Victorias.forEach(Victorias=>{
             if(Victorias == data.nombreequipo){
@@ -30,29 +37,98 @@ socket.on('Server: TablePositionReply',(data)=>{
             }
         })
         TablaRepeticiones.push([data.nombreequipo,Repeticiones])
-        console.log(TablaRepeticiones)
+        Jugadores.forEach(Jugadores=>{
+            if(Jugadores.idequipo == data.idequipo){
+                DropdownHTML = DropdownHTML + `<li><a class="dropdown-item">` + Jugadores.nombrejugador + ", "+ Jugadores.numerojugador +`</a></li>` 
+            }
+        })
+        Dropdown.push(DropdownHTML)
     })
     
-
     for(let i = 0; i < TablaRepeticiones.length; i++){
         for(let j=0; j < TablaRepeticiones.length - i -1; j++){
             if(TablaRepeticiones[j][1]<TablaRepeticiones[j+1][1]){
                 guardar = TablaRepeticiones[j][1];
                 TablaRepeticiones[j][1] = TablaRepeticiones[j+1][1];
-                TablaRepeticiones[j+1][1] = guardar;    
+                TablaRepeticiones[j+1][1] = guardar; 
+                guardar = Dropdown[j];
+                Dropdown[j] = Dropdown[j+1];
+                Dropdown[j+1] = guardar; 
+                   
                 [TablaRepeticiones[j][0],TablaRepeticiones[j+1][0]] = [TablaRepeticiones[j+1][0],TablaRepeticiones[j][0]]
             }
         }
     }
+
+
     
     i = 0;
     TablaRepeticiones.forEach((TablaRepeticiones,idx)=>{
         i++;
         Positiones = Positiones + `<tr class = 'table-primary' ><td>`+ i + `</td>
-                            <td> ` + TablaRepeticiones[0] + `</td> 
+                            <td> ` + `<div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                              ` + TablaRepeticiones[0] + `
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">` + Dropdown[idx] + `</ul>
+                            </div></td> 
                             <td> ` + TablaRepeticiones[1] + `</td></tr>`
     })
     document.getElementById('Posiciones').innerHTML = Positiones;
+})
+
+
+socket.on('Server: TablePositionReplyB',(data)=>{
+    TablaRepeticiones = [];
+    Positiones = "";
+    Dropdown = [];
+    data.forEach(data=>{
+        DropdownHTML = '';
+        Repeticiones = 0;
+        Victorias.forEach(Victorias=>{
+            if(Victorias == data.nombreequipo){
+                Repeticiones++;
+            }
+        })
+        TablaRepeticiones.push([data.nombreequipo,Repeticiones])
+        Jugadores.forEach(Jugadores=>{
+            if(Jugadores.idequipo == data.idequipo){
+                DropdownHTML = DropdownHTML + `<li><a class="dropdown-item">` + Jugadores.nombrejugador + ", "+ Jugadores.numerojugador +`</a></li>` 
+            }
+        })
+        Dropdown.push(DropdownHTML)
+    })
+    
+    for(let i = 0; i < TablaRepeticiones.length; i++){
+        for(let j=0; j < TablaRepeticiones.length - i -1; j++){
+            if(TablaRepeticiones[j][1]<TablaRepeticiones[j+1][1]){
+                guardar = TablaRepeticiones[j][1];
+                TablaRepeticiones[j][1] = TablaRepeticiones[j+1][1];
+                TablaRepeticiones[j+1][1] = guardar; 
+                guardar = Dropdown[j];
+                Dropdown[j] = Dropdown[j+1];
+                Dropdown[j+1] = guardar; 
+                   
+                [TablaRepeticiones[j][0],TablaRepeticiones[j+1][0]] = [TablaRepeticiones[j+1][0],TablaRepeticiones[j][0]]
+            }
+        }
+    }
+
+
+    
+    i = 0;
+    TablaRepeticiones.forEach((TablaRepeticiones,idx)=>{
+        i++;
+        Positiones = Positiones + `<tr class = 'table-primary' ><td>`+ i + `</td>
+                            <td> ` + `<div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                              ` + TablaRepeticiones[0] + `
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">` + Dropdown[idx] + `</ul>
+                            </div></td> 
+                            <td> ` + TablaRepeticiones[1] + `</td></tr>`
+    })
+    document.getElementById('PosicionesB').innerHTML = Positiones;
 })
 
 socket.on('Server: ProgramationReply',(data)=>{

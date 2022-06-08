@@ -20,12 +20,15 @@
 
 //Sockets for connection to the backend 
 const socket = io();
+URLArray = document.URL.split('/')
+ID = URLArray[URLArray.length-1].replace('?',"")
 
 Indices = [];
 
 socket.emit('Client: EstadimunRequest')
 
 socket.emit('Client: TeamsRequest')
+
 
 socket.on('Server: EstadimunReply',(data)=>{
     SelectTeam = `<select class="form-select" id="Estadium" required> 
@@ -95,16 +98,12 @@ SelectEA.addEventListener('change',()=>{
         document.getElementById('Equipo-B-' + Indices).disabled = false;    
     })
     document.getElementById('Equipo-B-' + Selected).disabled = true;
-    if(TeamA.value != '' && TeamB.value != ''){
-        document.getElementById('ArbitroSelect').style.display = '';
-        socket.emit('Client: ArbitroListoProgramacion',({EquipoA: TeamA.value, EquipoB: TeamB.value}))
-    }
-
 })
 
 socket.on('Server: NewTablesData',(data)=>{
     TableResultDeploy(data);
 })
+
 
 
 
@@ -115,10 +114,14 @@ SelectEB.addEventListener('change',()=>{
         document.getElementById('Equipo-A-' + Indices).disabled = false;    
     })
     document.getElementById('Equipo-A-' + Selected).disabled = true;
-    if(TeamA.value != '' && TeamB.value != ''){
-        document.getElementById('ArbitroSelect').style.display = '';
-        socket.emit('Client: ArbitroListoProgramacion',({EquipoA: TeamA.value, EquipoB: TeamB.value}))
-    }
+})
+
+socket.emit('Client: ProgrammingRequest',ID);
+
+
+
+socket.on('Server: ProgrammingReply',(data)=>{
+    socket.emit('Client: ArbitroListoProgramacion',({EquipoA: data[0]["Equipo A"], EquipoB: data[0]["Equipo B"]}))
 })
 
 SendProgramming.addEventListener('click',(event)=>{
@@ -131,43 +134,9 @@ SendProgramming.addEventListener('click',(event)=>{
     SelectEB = document.getElementById('TeamB');
 
     if(SelectEA.value != '' && SelectEB.value != '' && Arbitros.value != '' && Estadium.value != '' && DateI.value != ''){
-        ProgrammingObject = {EquipoA: SelectEA.value.split(", ")[2], EquipoB: SelectEB.value.split(", ")[2], Arbitro: Arbitros.value, Estadio: Estadium.value, Fecha: DateI.value}
-        socket.emit('Client: NewProgramming',ProgrammingObject)
-        alert('Datos enviados correctamente')
+        ProgrammingObject = {EquipoA: SelectEA.value.split(", ")[2], EquipoB: SelectEB.value.split(", ")[2], Arbitro: Arbitros.value, Estadio: Estadium.value, Fecha: DateI.value, ID}
+        socket.emit('Client: ModifyProgramming',ProgrammingObject)
+        alert('Datos modificados correctamente')
+        location.href = "/Programacion"
     }
 })
-
-ModificarButton = document.getElementById('btn-Modificar')
-DataSelector = document.getElementById('DataSelector')
-Back = document.getElementById('Back')
-
-
-ModificarButton.addEventListener('click',(event)=>{
-    event.preventDefault();
-    $('#TableResult').empty();
-    Modificar.style.display = '';
-    DataSelector.style.display = 'none';
-})
-
-Back.addEventListener('click',(event)=>{
-    event.preventDefault();
-    Modificar.style.display = 'none';
-    DataSelector.style.display = '';
-})
-
-BuscarModify.addEventListener('click',(event)=>{
-    event.preventDefault();
-    Busqueda = document.getElementById('NombreBusqueda').value;
-
-    Fecha = document.getElementById('DateModification').value;
-    Row = '';
-    $('#TableResult').empty();
-    socket.emit('Client: ProgramacionBusquedaRequest',{Busqueda,Fecha});
-})
-
-function TableResultDeploy(data){
-    data.forEach((data) => {
-            Row = "<tr class = 'table-primary' ><td>" + data["Equipo A"] + "</td><td>" + data["Equipo B"] + "</td><td>" + data.Arbitro + "</td><td>" + data.Fecha.substring(0,10) + "</td><td>" + data.Estadio + "</td><td><a href='/Selected/Programacion/" + data.IDProgramacion + "' class='btn btn-primary'>Modificar</a></td></tr>"
-            $('#TableResult').append(Row);
-    })
-}

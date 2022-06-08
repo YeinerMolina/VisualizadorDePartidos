@@ -92,6 +92,13 @@ module.exports = io => {
             TablePosition(socket);
         })
 
+        socket.on('Client: ProgrammingRequest',(ID)=>{
+            ProgrammingModifyRequest(socket,ID);
+        });
+        socket.on('Client: ModifyProgramming',(ProgrammingObject)=>{
+            ModifyProgramming(ProgrammingObject);
+        })
+
     })
 }
 
@@ -470,7 +477,15 @@ function TablePosition(socket){
             socket.emit('Server: Victorias',data)
         }
     })
-    Query = "SELECT * FROM futbol.equipos";
+    Query = "SELECT * FROM futbol.jugadores";
+    connection.query(Query, (error,data)=>{
+        if(error){
+            console.log(error);
+        }else{
+            socket.emit('Server: Jugadores',data)
+        }
+    })
+    Query = "SELECT * FROM futbol.equipos WHERE Grupo=1";
     connection.query(Query, (error,data)=>{
         if(error){
             console.log(error);
@@ -478,7 +493,37 @@ function TablePosition(socket){
             socket.emit('Server: TablePositionReply',data)
         }
     })
+    Query = "SELECT * FROM futbol.equipos  WHERE Grupo=2";
+    connection.query(Query, (error,data)=>{
+        if(error){
+            console.log(error);
+        }else{
+            socket.emit('Server: TablePositionReplyB',data)
+        }
+    })
     
+}
+
+function ProgrammingModifyRequest(socket,ID){
+    Query = "SELECT * FROM futbol.Programacion WHERE IDProgramacion=?";
+    connection.query(Query,ID, (error,data)=>{
+        if(error){
+            console.log(error);
+        }else{
+            socket.emit('Server: ProgrammingReply',data)
+        }
+    })
+}
+
+function ModifyProgramming(ProgrammingObject){
+    query = "UPDATE `futbol`.`Programacion` SET `Equipo A` = ?, `Equipo B` = ?, `Arbitro` = ?, `Estadio` = ?, `Fecha` = ?  WHERE (`IDProgramacion` = ?);"
+    dataArray = [ProgrammingObject.EquipoA, ProgrammingObject.EquipoB, ProgrammingObject.Arbitro, ProgrammingObject.Estadio, ProgrammingObject.Fecha, ProgrammingObject.ID]
+
+    connection.query(query,dataArray, (error,data)=>{
+        if(error){
+            console.log(error);
+        }
+    })
 }
 
 const connection = require('../database/db');
