@@ -10,7 +10,7 @@ module.exports = io => {
             NuevoArbitro(newArbitro)
         })
 
-        socket.on('client:RequireProcedence',()=>{
+        socket.on('client: RequireProcedence',()=>{
             ProcedenceRequest(socket);
         })
 
@@ -100,6 +100,10 @@ module.exports = io => {
 
         socket.on('Client: EliminarParametro',(Parametros)=>{
             EliminarParametro(Parametros);
+        })
+
+        socket.on('client: Requiredata',(Busqueda)=>{
+            DataRequiredMod(Busqueda,socket);
         })
 
     })
@@ -548,6 +552,37 @@ function EliminarParametro(Parametros){
             console.log(error);
         }
     })
+}
+
+function DataRequiredMod(Busqueda,socket){
+    switch(Busqueda.Type){
+        case 'Equipo':
+            DB = [`equipos`]
+            Column = [`idequipo`]
+            break;
+        case 'Jugador':
+            DB = ['arbitros']
+            Column = `idarbitro`
+            break;
+        case 'Estadio':
+            DB = ['jugadores']
+            Column = `idjugador`
+            break;
+        case 'Arbitro':
+            DB = ['estadios']
+            Column = `idestadio`
+            break;
+    }
+
+    Query = "SELECT * FROM futbol."+ DB[0] +" WHERE "+Column[0]+"= ?";
+    connection.query(Query, Busqueda.ID, (error,data)=>{
+        if(error){
+            console.log(error);
+        }else{
+            socket.emit('Server: ReplyData',(data))
+        }
+    })
+
 }
 
 const connection = require('../database/db');
