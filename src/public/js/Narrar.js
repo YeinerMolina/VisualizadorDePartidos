@@ -152,6 +152,9 @@ Finish.addEventListener('click',(e)=>{
     Dia = new Date().toLocaleDateString('fr-CA', {timezone: 'America/Bogota', hour12: false})
     Fecha = Dia + " " + Hora
     socket.emit('Client: FinishGame',{Fecha, ID});
+    alert('Juego finalizado, redireccionando')
+    setTimeout(function () {
+        location.href = '/'
+    }, 1000);
 
-    location.href = '/'
 })

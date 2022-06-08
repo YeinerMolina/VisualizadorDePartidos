@@ -443,6 +443,7 @@ function StartEventosTeam(ID){
 }
 function FinishGame(DatosFinish){
     Query = "UPDATE `futbol`.`Programacion` SET `FechaFinal` = ? WHERE (`IDProgramacion` = ?);"
+    console.log([DatosFinish.Fecha, DatosFinish.ID])
     connection.query(Query,[DatosFinish.Fecha, DatosFinish.ID], (error,data)=>{
         if(error){
             console.log(error);
