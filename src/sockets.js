@@ -19,7 +19,6 @@ module.exports = io => {
         })
 
         socket.on('client: busquedaRequest',(Busqueda)=>{
-
             BusquedaModify(socket,Busqueda);
         })
         
@@ -97,6 +96,10 @@ module.exports = io => {
         });
         socket.on('Client: ModifyProgramming',(ProgrammingObject)=>{
             ModifyProgramming(ProgrammingObject);
+        })
+
+        socket.on('Client: EliminarParametro',(Parametros)=>{
+            EliminarParametro(Parametros);
         })
 
     })
@@ -215,7 +218,6 @@ function BusquedaModify(socket,Busqueda){
                 console.log(error);
             }else{
                 socket.emit('Server: NewTablesData',(data))
-                
             }
         })
     }
@@ -520,6 +522,28 @@ function ModifyProgramming(ProgrammingObject){
     dataArray = [ProgrammingObject.EquipoA, ProgrammingObject.EquipoB, ProgrammingObject.Arbitro, ProgrammingObject.Estadio, ProgrammingObject.Fecha, ProgrammingObject.ID]
 
     connection.query(query,dataArray, (error,data)=>{
+        if(error){
+            console.log(error);
+        }
+    })
+}
+
+function EliminarParametro(Parametros){
+    switch(Parametros.Type){
+        case 'Equipo':
+            query = "DELETE FROM `futbol`.`equipos` WHERE (`idequipo` = ?);"
+        break;
+        case 'Jugador':
+            query = "DELETE FROM `futbol`.`jugadores` WHERE (`idjugador` = ?);"
+        break;
+        case 'Arbitro':
+            query = "DELETE FROM `futbol`.`arbitros` WHERE (`idarbitro` = ?);"
+        break;
+        case 'Estadio':
+            query = "DELETE FROM `futbol`.`estadios` WHERE (`idestadio` = ?);"
+        break;
+    }
+    connection.query(query,Parametros.identificacion, (error,data)=>{
         if(error){
             console.log(error);
         }

@@ -24,6 +24,38 @@
 //Sockets for connection to the backend 
 const socket = io();
 
+URLArray = document.URL.split('/')
+ID = URLArray[URLArray.length-1].replace('?',"")
+Type = URLArray[URLArray.length-2].replace('?',"")
+
+Equipo = document.getElementById('equipos');
+Arbitros = document.getElementById('Arbitros');
+Estadios = document.getElementById('Estadios');
+
+switch(Type){
+    case 'Equipo':
+        Equipo.style.display = ''
+        Arbitros.style.display = 'none'
+        Estadios.style.display = 'none'
+        break;
+    case 'Jugador':
+        Equipo.style.display = ''
+        Arbitros.style.display = 'none'
+        Estadios.style.display = 'none'
+        break;
+    case 'Estadio':
+        Equipo.style.display = 'none'
+        Arbitros.style.display = 'none'
+        Estadios.style.display = ''
+        break;
+    case 'Arbitro':
+        Equipo.style.display = 'none'
+        Arbitros.style.display = ''
+        Estadios.style.display = 'none'
+        break;
+}
+
+
 var Row = '';
 var btnDelete = 'null';
 
@@ -204,41 +236,36 @@ BuscarModify.addEventListener('click',(event)=>{
     socket.emit('client: busquedaRequest',{Busqueda,Type});
 })
 
-function Eliminar(Type,identificacion){
-    socket.emit('Client: EliminarParametro',({Type,identificacion}))
-    Busqueda = document.getElementById('NombreBuscar').value;
-    Type = document.getElementById('Type').value;
-    Row = '';
-    socket.emit('client: busquedaRequest',{Busqueda,Type});
-    alert('Eliminado')
-}
-
 function TableResultDeploy(data){
 
     data.forEach((data) => {
 
         if (data.nombreequipo != undefined){
-            Row = "<tr class = 'table-primary' ><td>" + data.nombreequipo + "</td><td> Equipo de futbol </td><td><a href='/Selected/Configuracion/Equipo/" + data.idequipo + "' class='btn btn-primary'>Modificar</a><button class='delete btn btn-danger' onclick = Eliminar('Equipo',"+ data.idequipo +")>Eliminar</button></td></tr>"
+            Row = "<tr class = 'table-primary' ><td>" + data.nombreequipo + "</td><td> Equipo de futbol </td><td><a href='/selected/Equipo/" + data.nombreequipo + "' class='btn btn-primary'>Modificar</a><button data-id=" + 'Equipo-' + data.idequipo + '-' + data.nombreequipo.replace(' ','') +" class='delete btn btn-danger'>Eliminar</button></td></tr>"
             $('#TableResult').append(Row);
         }
         if (data.nombrejugador != undefined){
 
-            Row = "<tr class = 'table-primary' ><td>" + data.nombrejugador + "</td><td> Jugador de futbol </td><td><a href='/Selected/Configuracion/Jugador/" + data.idjugador + "' class='btn btn-primary'>Modificar</a><button class='delete btn btn-danger' onclick = Eliminar('Jugador',"+ data.idjugador +")>Eliminar</button></td></tr>"
+            Row = "<tr class = 'table-primary' ><td>" + data.nombrejugador + "</td><td> Jugador de futbol </td><td><a href='/selected/Jugador/" + data.idjugador + "' class='btn btn-primary'>Modificar</a><button class='delete btn btn-danger'>Eliminar</button></td></tr>"
             $('#TableResult').append(Row);
         }
         if (data.nombreestadio != undefined){
 
-            Row = "<tr class = 'table-primary' ><td>" + data.nombreestadio + "</td><td> Estadio </td><td><a href='/Selected/Configuracion/Estadio/" + data.idestadio + "' class='btn btn-primary'>Modificar</a><button class='delete btn btn-danger' onclick = Eliminar('Estadio',"+ data.idestadio +")>Eliminar</button></td></tr>"
+            Row = "<tr class = 'table-primary' ><td>" + data.nombreestadio + "</td><td> Estadio </td><td><a href='/selected/Jugador/" + data.idestadio + "' class='btn btn-primary'>Modificar</a><button class='delete btn btn-danger'>Eliminar</button></td></tr>"
             $('#TableResult').append(Row);
         }
         if (data.nombrearbitro != undefined){
 
-            Row = "<tr class = 'table-primary' ><td>" + data.nombrearbitro + "</td><td> Arbitro </td><td><a href='/Selected/Configuracion/Arbitro/" + data.idarbitro + "' class='btn btn-primary'>Modificar</a><button class='delete btn btn-danger' onclick = Eliminar('Arbitro',"+ data.idarbitro +")>Eliminar</button></td></tr>"
+            Row = "<tr class = 'table-primary' ><td>" + data.nombrearbitro + "</td><td> Arbitro </td><td><a href='/selected/Jugador/" + data.idarbitro + "' class='btn btn-primary'>Modificar</a><button class='delete btn btn-danger'>Eliminar</button></td></tr>"
             $('#TableResult').append(Row);
         }
     })
     btnDelete = document.querySelector('.delete');
+    console.log(btnDelete)
 }
+
+btnDelete = document.querySelector('.delete');
+btnDelete.addEventListener('click', e=> console.log(btnDelete.setdata.id))
 
 
 

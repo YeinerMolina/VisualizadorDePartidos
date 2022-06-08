@@ -37,6 +37,10 @@ router.get('/Selected/Programacion/:IDGame', (req,res) =>{
     res.render('ProgramacionMod');
 })
 
+router.get('/Selected/Configuracion/:Tipo/:IDGame', (req,res) =>{
+    res.render('ConfigMod');
+})
+
 
 const connection = require('../../database/db.js');
 module.exports = router;
