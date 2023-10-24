@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+ 
+html {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/*.header {
+    position: fixed;
+    
+} corregir el menú para que quede fijo*/  
+
+.logo{
+    float: left;
+}
+.logo img {
+    margin-top: 10px ;
+    width: 75px;
+    height: 75px;
+}
+
+.logo strong {
+    display: inline;
+    font-weight: 800;
+    color: #24cd24;
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.menu {
+    float: center;
+    overflow: hidden;
+    text-align: center;
+    font-weight: bold;
+    height: 95px;
+}
+
+.menu nav {
+    margin: 40px;
+}
+
+.menu nav ul li {
+    display: inline;
+    list-style: none;    
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+}
+
+.pse {
+    color:white;
+    background-color: #24cd24;
+    
+    border-radius: 10px;
+}
+
+.cotiza {
+    color: black;
+    background-color: #ffff0b;
+    border-radius: 10px;
+}
+
+
+/*.servicios p {
+    color: #24cd24;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bolder;
+    
+    
+}
+
+.icons {
+    padding: 70px;
+    font-size: 25px;
+}
+
+
+
+.atencion {
+    height: 50px;
+    background-color: #24cd24;
+    display: block;
+}*/
+
+.lineas {
+    margin-top: 0;
+    background-color: green;
+    color:white;
+    
+}
+
+.lineas p {
+    text-align: center;
+    padding: 20px;
+    margin-top: 0px;
+}
+
+/*.numeros-contactos {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.numeros-contactos strong {
+    padding: 10px;
+}*/
+
+.numeros-contactos{
+    font-size: 20px;
+}
+
+.footer nav {
+    display: flex;
+    justify-content: center;
+}
+
+.footer nav ul li {
+    display: inline;
+    list-style: none;    
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+.boxes, .boxesGreen {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px;
+    align-items: center;
+    font-size: larger;
+}
+
+.boxesGreen{
+    justify-content: space-evenly;
+    
+}
+
+.boxes p {
+    flex: 1;
+    text-align: justify;
+    padding-right: 100px;
+    font-size: large;
+}

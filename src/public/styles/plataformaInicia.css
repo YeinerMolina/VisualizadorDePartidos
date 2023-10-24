@@ -1,0 +1,17 @@
+.right{
+    display: flex;
+    flex-direction: column;
+    background-color: #cccccc;
+    height: 606px;
+}
+
+.boxesIngresarDatos{
+    width: 500px;
+    height: 25px;
+    border-radius: 10px;
+}
+
+input {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+}

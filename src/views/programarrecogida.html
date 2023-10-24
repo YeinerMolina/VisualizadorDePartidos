@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+       <meta charset="utf-8">
+       <title> GreenCycle </title>
+       <link rel="stylesheet" href="/styles/iniciosesion.css">
+       <link rel="stylesheet" href="/styles/programarrecogida.css">
+       <script src="https://kit.fontawesome.com/88df4f05cc.js" crossorigin="anonymous"></script>
+  </head>
+
+  <body style="background-color: #cccccc;">
+      <header>
+
+       <section class="logo">
+         <img src="./images/logo_-_Copy-removebg-preview.png"> <strong> GreenCycle</strong> 
+         
+         <div style="float: right; display: flex; align-items: center; flex-direction: column;">
+          <i id="optionLogo" class="fa-solid fa-users" style="color: black; font-size: 40px; margin-top: 10px;"></i>
+          <div id="optionMenu" style="display: none; color:black; background-color: #cccccc; border-radius: 5px; border: solid #cccccc;">
+           <a href="../plataforma.html"> SALIR </a>
+ 
+           <script>
+             const optionLogo= document.getElementById("optionLogo");
+             const optionMenu= document.getElementById("optionMenu");
+ 
+             // optionLogo.addEventListener("click", function(){
+             //   optionMenu.style.display="block"
+             // })
+ 
+             optionLogo.addEventListener("click", function(){
+               if(optionMenu.style.display==="none"){
+                 optionMenu.style.display="block";
+               } else {optionMenu.style.display="none";}
+             })
+   
+           </script>
+ 
+         </div>
+         <p style="margin: 10px;"> Nombre de la Empresa </p>
+         </div>
+       </section>
+
+     </header>
+
+       <section class="menuAside" style="float: left;">
+         <div>
+             <nav>
+               <ul>
+                 <li> <i style="color: gray;" class="fa-solid fa-house"></i> <br> <a href="/iniciosesion" style="color: gray;"> Inicio </a> </li>
+                 <li> <i class="fa-solid fa-truck-fast"></i> <br> <a href="/programarrecogida" style="color: black;"> Programar Recogida </a>  </li>
+                 <li> <i style="color: gray;" class="fa-solid fa-clipboard"></i> <br> <a href="" style="color: gray;">  Resumen Mensual </a> </li>
+               </ul>
+             </nav>
+         </div>
+       </section>
+
+
+       <section class="recogida">
+        <div>
+          <div>
+            <img src="./images/logo_-_Copy-removebg-preview.png" style="height: 120px; margin-top: 20px;"> 
+            <strong style="position: absolute; height: 100px;display: inline-flex;align-items: center; margin-left: 100px; font-size: 50px;"> 
+              PROGRAMAR RECOGIDA </strong> 
+            </div>
+
+          <div>
+            <p> Bienvenido al formulario de programación de recogida de residuos, por favor diligencie la información solicitada a continuación:</p>
+          </div>
+
+          <form action="" method="get">
+            <ul>
+              <li class="recogidaItem"> 
+                <i class="fa-solid fa-calendar-days"></i> Fecha 
+                <input type="date"id="date" name="date_day"> </li>
+              <li class="recogidaItem"> <i class="fa-regular fa-clock"></i> Hora 
+                <input type="time" id="datetime" name="date_time"></li>
+              <li class="recogidaItem"> <i class="fa-solid fa-map-location"></i> Lugar 
+                 <input type="text" placeholder="Dirección de recogida">  </li>
+              <li class="recogidaItem"> <i class="fa-solid fa-recycle"></i> Tipo de residuos
+                <select style="height: 20px;">
+                  <option> -Seleccionar-</option>
+                  <option> Hospitalarios</option>
+                  <option> Orgánicos</option>
+                  <option> Escombros</option>
+                  <option> Otros</option>
+                </select>  </li>
+              <li class="recogidaItem"> <i class="fa-solid fa-scale-balanced"></i> Kg aproximados
+                <select style="height: 20px;">
+                <option> -Seleccionar Rango-</option>
+                <option> 0-10 kg</option>
+                <option> 11-20 kg</option>
+                <option> 21-30 kg</option>
+                <option> 31-40 kg</option> 
+                <option> Más de 40kg</option>
+                </select> </li>
+                <button class="button" id="programarRecogida"> Programar Recogida</button>
+            </ul>
+          </form>
+          
+          <script>
+            document.getElementById("programarRecogida").addEventListener ("click", function(){
+              alert("Recogida programada con Éxito");
+             } )
+          </script>
+        </div>
+       </section>
+            
+   <body>
+</html>

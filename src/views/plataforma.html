@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> Inicar sesión GreenCycle</title>
+        <link rel="stylesheet" href="/styles/plataformaInicia.css">
+        <link rel="stylesheet" href="/styles/style.css">
+        <link rel="stylesheet" href="/styles/style2.css">
+    </head>
+
+    <body style="display: flex;">
+        <section class="right">
+
+                <div style="margin-left: 20px;" class="logo">
+                    <img src="/images/logo_-_Copy-removebg-preview.png"> <strong> GreenCycle</strong> <br>
+                    <br>
+                    <strong> Bienvenido </strong>
+                </div>
+                
+                <strong style="margin: 20px; display: inline-block;"> Ingrese sus datos a continuación. Si no está registrado por favor registrese <a href="/registro"> aquí</a></strong>
+                
+                <div style="margin:10px;">
+                    <form action="" method="get">
+                        <label for="usuario"> Usuario <br> </label>
+                        <input class="boxesIngresarDatos" type="email" id="usuario" name="user_mail">
+                        <br>
+                        <label for="contraseña"> Contraseña <br> </label>
+                        <input class="boxesIngresarDatos" type="password" id="contraseña" name="user_password">
+                        <br>
+                        <strong style="margin: 10px;"> ¿Olvidó su contraseña?</strong>
+                        <br>
+                        <button id="iniciarSesion" style="margin: 30px;" class="button" type="submit"> <a href="/iniciosesion"> Iniciar sesión </a></button>
+                        <div class="loader" style="height: 20px; width: 600px; background-color: white; display: none;">
+
+                        </div>
+                    </form>
+
+                    <!-- <script>                        
+                    document.getElementById("iniciarSesion").addEventListener("click", function() {
+                        
+                        document.getElementById("loader").style.display = "block";                           
+                        });
+                    </script> -->
+                </div>
+               
+        </section>
+
+        <section>
+            <img style="width:max-content; height: 606px;" src="/images/truck.jpg">
+        </section>
+
+    </body>
+</html>

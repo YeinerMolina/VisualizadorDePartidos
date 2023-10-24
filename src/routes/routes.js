@@ -1,46 +1,32 @@
 const router = require('express').Router();
 
 //Routes
-router.get('/', (req,res) =>{
+router.get('/', (_req,res) =>{
     res.render('index')
 })
 
-router.get('/Configuracion', (req,res) =>{
-    res.render('Config');
+router.get('/cotiza', (_req,res) =>{
+    res.render('cotiza');
 })
 
-router.get('/Partidos', (req,res) =>{
-    res.render('Partidos');
+router.get('/iniciosesion', (_req,res) =>{
+    res.render('iniciosesion');
 })
 
-router.get('/Programacion', (req,res) =>{
-    res.render('Programacion');
+router.get('/nosotros', (_req,res) =>{
+    res.render('nosotros');
 })
 
-router.post('/upload', (req,res) =>{
-
+router.get('/plataforma', (_req,res) =>{
+    res.render('plataforma');
 })
 
-router.get('/Resultado/:IDGame', (req,res) =>{
-    res.render('Resultado');
+router.get('/programarrecogida', (_req,res) =>{
+    res.render('programarrecogida');
 })
 
-router.get('/Progreso/:IDGame', (req,res) =>{
-    res.render('Progreso');
+router.get('/registro', (_req,res) =>{
+    res.render('registro');
 })
 
-router.get('/Narrar/:IDGame', (req,res) =>{
-    res.render('Narrar');
-})
-
-router.get('/Selected/Programacion/:IDGame', (req,res) =>{
-    res.render('ProgramacionMod');
-})
-
-router.get('/Selected/Configuracion/:Tipo/:IDGame', (req,res) =>{
-    res.render('ConfigMod');
-})
-
-
-const connection = require('../../database/db.js');
 module.exports = router;

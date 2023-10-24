@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> Registro GreenCycle</title>
+        <link rel="stylesheet" href="/styles/plataformaInicia.css">
+        <link rel="stylesheet" href="/styles/style.css">
+        <link rel="stylesheet" href="/styles/style2.css">
+    </head>
+
+    <body style="display: flex;">
+        <section class="right">
+
+                <div style="margin-left: 20px;" class="logo">
+                    <img src="/images/logo_-_Copy-removebg-preview.png"> <strong> GreenCycle</strong> <br>
+                    <br>
+                    <strong> Bienvenido </strong>
+                </div>
+                
+                <strong style="margin: 20px; display: inline-block;"> Ingrese sus datos a continuación. Al finalizar, presione el botón Enviar <br>
+                    A su correo llegará la información con sus datos de acceso. No olvide revisar su bandeja de spam. </strong>
+                
+                <div style="margin:10px;">
+                    <div>    
+
+                        <label for="name_2"> Nombre del Negocio:<br> </label>
+                        <input class="boxesIngresarDatos" type="text" id="name_2" name="user_name_2" placeholder="Nombre de la Empresa">
+                        <br>
+                        <label for="phone"> NIT: <br> </label>
+                        <input class="boxesIngresarDatos" type="number" id="NIT" name="user_nit" placeholder="NIT de la Empresa">
+                        <br>
+                        <label for="phone"> Celular: <br> </label>
+                        <input class="boxesIngresarDatos" type="number" id="phone" name="user_phone" placeholder="Teléfono de Contacto">
+                        <br>
+                        <label for="mail"> Correo: <br> </label>
+                        <input class="boxesIngresarDatos" type="mail" id="mail" name="user_mail" placeholder="Correo de Contacto">
+                        <br style="margin-bottom: 20px;" >  
+                        <label for="check"> Señale aquí si acepta nuestra Política de Tratamiento de Datos </label>
+                        <input type="checkbox" id="check" name="check">     
+                        <button id="botonRegistro" style="margin: 30px;" class="button" onclick=""> <a href="/plataforma"> Registrarse </a> </button>
+                                  
+                        
+                    </div>
+
+                    <script>
+                        const button = document.getElementById("botonRegistro");
+                        button.addEventListener("click", function(event) {
+                        //  event.preventDefault();    
+                         alert("¡REGISTRO EXITOSO!");
+                        //  location.href = location.pathname.replace("registro", "plataforma");
+                        //  console.log(location.pathname.replace("registro", "plataforma"));               
+                        });                  
+                     </script> 
+
+                </div>
+               
+        </section>
+
+   
+
+    <section >
+        <img style="width:max-content; height: 606px;" src="/images/truck.jpg">
+    </section>
+
+    </body>
+
+</html>      
+    
